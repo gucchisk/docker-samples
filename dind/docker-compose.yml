@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  dind:
+    image: docker:19.03.12-dind
+    privileged: true
+    tty: true
+    ports:
+      - 5301:2376
+      - 8001:80
+    volumes:
+      - ./certs:/certs
