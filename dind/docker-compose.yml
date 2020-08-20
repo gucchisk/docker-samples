@@ -6,7 +6,7 @@ services:
     privileged: true
     tty: true
     ports:
-      - 5301:2376
+      - 8376:2376
       - 8001:80
     volumes:
       - ./certs:/certs

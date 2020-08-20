@@ -5,3 +5,8 @@ services:
     image: nginx:latest
     ports:
       - 80:80
+  go:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
