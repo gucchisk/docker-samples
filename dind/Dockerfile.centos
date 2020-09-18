@@ -1,0 +1,15 @@
+FROM centos:7
+
+RUN yum install -y yum-utils device-mapper-persistent-data lvm2 ca-certificates openssl && yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && yum install -y docker-ce docker-ce-cli containerd.io
+RUN curl https://raw.githubusercontent.com/docker-library/docker/93c19dff54de9876f736b3aa8026be5ad5987388/19.03/modprobe.sh -o /usr/local/bin/modprobe && chmod +x /usr/local/bin/modprobe
+RUN curl https://raw.githubusercontent.com/docker-library/docker/93c19dff54de9876f736b3aa8026be5ad5987388/19.03/docker-entrypoint.sh -o /usr/local/bin/docker-entrypoint.sh && chmod +x /usr/local/bin/docker-entrypoint.sh
+ENV DOCKER_TLS_CERTDIR=/certs
+RUN mkdir /certs /certs/client && chmod 1777 /certs /certs/client
+ENV DIND_COMMIT ed89041433a031cafc0a0f19cfe573c31688d377
+RUN curl https://raw.githubusercontent.com/docker/docker/${DIND_COMMIT}/hack/dind -o /usr/local/bin/dind && chmod +x /usr/local/bin/dind
+RUN curl https://raw.githubusercontent.com/docker-library/docker/93c19dff54de9876f736b3aa8026be5ad5987388/19.03/dind/dockerd-entrypoint.sh -o /usr/local/bin/dockerd-entrypoint.sh && chmod +x /usr/local/bin/dockerd-entrypoint.sh
+RUN systemctl enable docker
+VOLUME /var/lib/docker
+EXPOSE 2375 2376
+ENTRYPOINT dockerd-entrypoint.sh
+CMD /sbin/init

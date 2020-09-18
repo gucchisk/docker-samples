@@ -1,0 +1,6 @@
+FROM docker:19.03.12-dind
+
+RUN apk add openrc
+
+ENTRYPOINT dockerd-entrypoint.sh
+CMD /sbin/init

@@ -1,12 +1,30 @@
 version: "3.7"
 
 services:
-  dind:
-    image: docker:19.03.12-dind
+  alpine:
+    container_name: alpine
+    build:
+      context: .
+      dockerfile: Dockerfile.alpine
+    # image: docker:19.03.12-dind
     privileged: true
     tty: true
     ports:
+      - 8375:2375
       - 8376:2376
       - 8001:80
     volumes:
-      - ./certs:/certs
+      - ./certs_alpine:/certs
+  centos:
+    container_name: centos
+    build:
+      context: .
+      dockerfile: Dockerfile.centos
+    privileged: true
+    tty: true
+    ports:
+      - 9375:2375
+      - 9376:2376
+      - 8002:80
+    volumes:
+      - ./certs_centos:/certs
