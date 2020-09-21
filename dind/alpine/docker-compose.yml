@@ -2,10 +2,12 @@ version: "3.7"
 
 services:
   nginx:
+    container_name: nginx
     image: nginx:latest
     ports:
       - 80:80
-  go:
+  anaguma:
+    container_name: anaguma
     build:
       context: .
       dockerfile: Dockerfile
