@@ -12,20 +12,9 @@ services:
     ports:
       - 8375:2375
       - 8376:2376
-      - 8001:80
+      - 8080:80
     volumes:
       - ./certs_alpine:/certs
-  alpine_no_tls:
-    container_name: alpine_no_tls
-    build:
-      context: .
-      dockerfile: Dockerfile.alpine
-    privileged: true
-    tty: true
-    ports:
-      - 7375:2375
-      - 7376:2376
-      - 8003:80
   centos:
     container_name: centos
     build:
@@ -36,6 +25,6 @@ services:
     ports:
       - 9375:2375
       - 9376:2376
-      - 8002:80
+      - 9080:80
     volumes:
       - ./certs_centos:/certs
